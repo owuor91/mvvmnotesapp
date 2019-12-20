@@ -1,7 +1,8 @@
-package io.owuor91.mvvmnotesapp
+package io.owuor91.mvvmnotesapp.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import io.owuor91.mvvmnotesapp.R
 
 class MainActivity : AppCompatActivity() {
 
