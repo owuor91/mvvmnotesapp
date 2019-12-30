@@ -2,13 +2,12 @@ package io.owuor91.mvvmnotesapp.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import com.google.android.play.core.splitcompat.SplitCompat
-import com.google.android.play.core.splitinstall.SplitInstallManagerFactory
-import com.google.android.play.core.splitinstall.SplitInstallRequest
-import com.google.android.play.core.tasks.OnCompleteListener
-import com.google.android.play.core.tasks.OnFailureListener
+import com.google.android.play.core.splitinstall.*
+import com.google.android.play.core.splitinstall.model.SplitInstallSessionStatus
 import io.owuor91.mvvmnotesapp.R
 import io.owuor91.mvvmnotesapp.models.Note
 import io.owuor91.mvvmnotesapp.viewmodel.NotesViewModel
@@ -17,11 +16,13 @@ import org.koin.android.ext.android.inject
 
 class MainActivity : BaseActivity() {
     private val notesViewModel: NotesViewModel by inject()
-    //private lateinit var splitInstallManager: SplitInstallManager
+    private lateinit var splitInstallManager: SplitInstallManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        splitInstallManager = SplitInstallManagerFactory.create(this)
 
         notesViewModel.fetchNotes()
         observeNotesLiveData()
@@ -49,34 +50,66 @@ class MainActivity : BaseActivity() {
 
     fun fetchPostNotesFeature() {
         fab.setOnClickListener {
-            val splitInstallManager = SplitInstallManagerFactory.create(this)
+            tvProgress.text = "Loading post notes module"
             SplitCompat.install(this)
 
             val request: SplitInstallRequest =
                 SplitInstallRequest.newBuilder().addModule("post_notes").build()
             if (splitInstallManager.installedModules.contains("post_notes")) {
+                tvProgress.visibility = View.GONE
+                progressBar.visibility = View.GONE
                 openPostNotesFeature()
+            } else {
+                splitInstallManager.startInstall(request)
             }
-
-            splitInstallManager.registerListener { listener }
-            splitInstallManager.startInstall(request)
-                .addOnSuccessListener { listener }
-                .addOnFailureListener(OnFailureListener { it ->
-                    Toast.makeText(baseContext, it.message, Toast.LENGTH_LONG).show()
-                })
-                .addOnCompleteListener(OnCompleteListener { task ->
-                    if (task.isComplete && task.isSuccessful) {
-                        openPostNotesFeature()
-                    }
-                })
-
-            splitInstallManager.unregisterListener { listener }
-
 
         }
     }
 
     fun openPostNotesFeature() {
         startActivity(Intent(this, Class.forName("io.owuor91.post_notes.ui.AddNoteActivity")))
+    }
+
+    override fun onResume() {
+        super.onResume()
+        splitInstallManager.registerListener { listener }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        splitInstallManager.unregisterListener { listener }
+    }
+
+    protected val listener = SplitInstallStateUpdatedListener { state ->
+        state.moduleNames().forEach { name ->
+            when (state.status()) {
+                SplitInstallSessionStatus.DOWNLOADING -> {
+                    Toast.makeText(this, "Downloading", Toast.LENGTH_SHORT).show()
+                }
+
+                SplitInstallSessionStatus.REQUIRES_USER_CONFIRMATION -> {
+                    //Toast.makeText(this,"",Toast.LENGTH_SHORT).show()
+                }
+
+                SplitInstallSessionStatus.INSTALLED -> {
+                    displayLoadingState("Already installled", state)
+                    openPostNotesFeature()
+                }
+
+                SplitInstallSessionStatus.INSTALLING -> {
+                    displayLoadingState("Installing Post module", state)
+                    Toast.makeText(this, "Installing", Toast.LENGTH_SHORT).show()
+                }
+                SplitInstallSessionStatus.FAILED -> {
+                    Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+    }
+
+    fun displayLoadingState(message: String, state: SplitInstallSessionState) {
+        tvProgress.text = message
+        progressBar.max = state.totalBytesToDownload().toInt()
+        progressBar.progress = state.bytesDownloaded().toInt()
     }
 }
