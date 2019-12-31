@@ -12,13 +12,19 @@ import kotlinx.android.synthetic.main.activity_add_note.*
 import org.koin.android.ext.android.inject
 import org.koin.core.context.loadKoinModules
 
+private val loadModules by lazy {
+    loadKoinModules(postNotesModule)
+}
+
+private fun injectFeature() = loadModules
+
 class AddNoteActivity : BaseActivity() {
     private val postNotesViewModel: PostNotesViewModel by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_note)
-        loadKoinModules(postNotesModule)
+        injectFeature()
         observePostNoteLiveData()
     }
 
@@ -36,5 +42,4 @@ class AddNoteActivity : BaseActivity() {
             Toast.makeText(baseContext, error, Toast.LENGTH_LONG).show()
         })
     }
-
 }

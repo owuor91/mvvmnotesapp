@@ -30,7 +30,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         android:lines="8"
-        android:text="Name"
+        android:hint="Note"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etTitle" />
@@ -39,12 +39,12 @@
         android:id="@+id/btnPost"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
         android:onClick="clickPost"
         android:text="Post Note"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etNote" />
 </androidx.constraintlayout.widget.ConstraintLayout>

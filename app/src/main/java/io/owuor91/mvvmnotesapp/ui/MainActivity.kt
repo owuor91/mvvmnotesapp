@@ -84,15 +84,15 @@ class MainActivity : BaseActivity() {
         state.moduleNames().forEach { name ->
             when (state.status()) {
                 SplitInstallSessionStatus.DOWNLOADING -> {
-                    Toast.makeText(this, "Downloading", Toast.LENGTH_SHORT).show()
+                    displayLoadingState("Downloading Post note module", state)
                 }
 
                 SplitInstallSessionStatus.REQUIRES_USER_CONFIRMATION -> {
-                    //Toast.makeText(this,"",Toast.LENGTH_SHORT).show()
+                    startIntentSender(state.resolutionIntent()?.intentSender, null, 0, 0, 0)
                 }
 
                 SplitInstallSessionStatus.INSTALLED -> {
-                    displayLoadingState("Already installled", state)
+                    displayLoadingState("Already installed", state)
                     openPostNotesFeature()
                 }
 
