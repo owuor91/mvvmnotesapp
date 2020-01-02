@@ -21,6 +21,7 @@ class NotesViewModel(private val notesRepository: NotesRepository) : ViewModel()
             val notesResult = notesRepository.getNotes()
             if (notesResult.isSuccessful) {
                 notesMediatorLiveData.postValue(notesResult.body())
+                notesRepository.saveNotes(notesResult.body() as List<Note>)
             } else {
                 notesErrorMediatorLiveData.postValue(notesResult.errorBody().toString())
             }

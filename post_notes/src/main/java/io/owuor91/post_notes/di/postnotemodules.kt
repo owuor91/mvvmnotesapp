@@ -13,7 +13,7 @@ val postNotesModule = module {
 
     //single { createRetrofit() }
 
-    single<PostNoteRepository> { PostNoteRepositoryImpl(postNoteApi = get()) }
+    single<PostNoteRepository> { PostNoteRepositoryImpl(postNoteApi = get(), noteDao = get()) }
 
     single { (get() as? Retrofit)?.create(PostNoteApi::class.java) }
 }

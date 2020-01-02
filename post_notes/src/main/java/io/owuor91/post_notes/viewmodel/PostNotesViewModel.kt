@@ -20,7 +20,9 @@ class PostNotesViewModel(private val postNotesRepository: PostNoteRepository) : 
         viewModelScope.launch {
             val postNotesResponse = postNotesRepository.postNote(title, noteText)
             if (postNotesResponse.isSuccessful) {
-                postNotesMediatorLiveData.postValue(postNotesResponse.body())
+                val note = postNotesResponse.body()
+                postNotesMediatorLiveData.postValue(note)
+                postNotesRepository.saveNote(note as Note)
             } else {
                 postNotesErrorMediatorLiveData.postValue(postNotesResponse.errorBody().toString())
             }

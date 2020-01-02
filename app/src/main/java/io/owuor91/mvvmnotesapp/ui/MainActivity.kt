@@ -2,6 +2,7 @@ package io.owuor91.mvvmnotesapp.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -85,23 +86,48 @@ class MainActivity : BaseActivity() {
             when (state.status()) {
                 SplitInstallSessionStatus.DOWNLOADING -> {
                     displayLoadingState("Downloading Post note module", state)
+                    Log.i("DFD", "Downloading Post note module")
                 }
 
                 SplitInstallSessionStatus.REQUIRES_USER_CONFIRMATION -> {
                     startIntentSender(state.resolutionIntent()?.intentSender, null, 0, 0, 0)
+                    Log.i("DFD", "Requires user confirmation")
                 }
 
                 SplitInstallSessionStatus.INSTALLED -> {
                     displayLoadingState("Already installed", state)
                     openPostNotesFeature()
+                    Log.i("DFD", "Already installed")
                 }
 
                 SplitInstallSessionStatus.INSTALLING -> {
                     displayLoadingState("Installing Post module", state)
                     Toast.makeText(this, "Installing", Toast.LENGTH_SHORT).show()
+                    Log.i("DFD", "Installing Post module")
                 }
+
                 SplitInstallSessionStatus.FAILED -> {
                     Toast.makeText(this, "Failed", Toast.LENGTH_SHORT).show()
+                    Log.i("DFD", "Failed")
+                }
+                SplitInstallSessionStatus.CANCELED -> {
+                    Log.i("DFD", "Canceled")
+                }
+
+                SplitInstallSessionStatus.CANCELING -> {
+                    Log.i("DFD", "Canceling")
+                }
+
+                SplitInstallSessionStatus.DOWNLOADED -> {
+                    Log.i("DFD", "Downloaded")
+                }
+
+                SplitInstallSessionStatus.PENDING -> {
+                    Log.i("DFD", "Pending")
+                }
+
+                SplitInstallSessionStatus.UNKNOWN -> {
+                    Log.i("DFD", "Unknown")
                 }
             }
         }
