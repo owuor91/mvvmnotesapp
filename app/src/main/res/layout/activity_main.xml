@@ -51,5 +51,16 @@
         app:layout_constraintStart_toStartOf="@+id/progressBar"
         app:layout_constraintTop_toBottomOf="@+id/progressBar" />
 
+    <Button
+        android:id="@+id/btnNews"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginBottom="160dp"
+        android:onClick="fetchNewsFeature"
+        android:text="News"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

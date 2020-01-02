@@ -67,8 +67,24 @@ class MainActivity : BaseActivity() {
         }
     }
 
+    fun fetchNewsFeature(view: View) {
+        SplitCompat.install(this)
+
+        val request: SplitInstallRequest =
+            SplitInstallRequest.newBuilder().addModule("news").build()
+        if (splitInstallManager.installedModules.contains("news")) {
+            openNewsFeature()
+        } else {
+            splitInstallManager.startInstall(request)
+        }
+    }
+
     fun openPostNotesFeature() {
         startActivity(Intent(this, Class.forName("io.owuor91.post_notes.ui.AddNoteActivity")))
+    }
+
+    fun openNewsFeature() {
+        startActivity(Intent(this, Class.forName("io.owuor91.news.ui.NewsActivity")))
     }
 
     override fun onResume() {

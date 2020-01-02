@@ -1,6 +1,7 @@
 package io.owuor91.mvvmnotesapp.di
 
 import androidx.room.Room
+
 import io.owuor91.mvvmnotesapp.api.NotesApi
 import io.owuor91.mvvmnotesapp.api.createRetrofit
 import io.owuor91.mvvmnotesapp.database.NotesAppDatabase
@@ -18,7 +19,7 @@ val appModule = module {
 }
 
 val dataModule = module {
-    single { createRetrofit() }
+    single { createRetrofit(baseUrl = "https://akirachixnotesapi.herokuapp.com/") }
 
     single<NotesRepository> { NotesRepositoryImpl(notesApi = get(), noteDao = get()) }
 

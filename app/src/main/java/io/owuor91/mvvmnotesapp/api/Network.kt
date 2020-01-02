@@ -11,7 +11,8 @@ import java.util.concurrent.TimeUnit
 
 
 fun createOkHttpClient(): OkHttpClient {
-    return OkHttpClient.Builder().readTimeout(1, TimeUnit.MINUTES).writeTimeout(1, TimeUnit.MINUTES)
+    return OkHttpClient.Builder().readTimeout(1, TimeUnit.MINUTES)
+        .writeTimeout(1, TimeUnit.MINUTES)
         .build()
 }
 
@@ -19,11 +20,13 @@ fun createGson(): Gson {
     return GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.IDENTITY).create()
 }
 
-fun createRetrofit(): Retrofit {
+fun createRetrofit(baseUrl: String): Retrofit {
     return Retrofit.Builder()
-        .baseUrl("https://akirachixnotesapi.herokuapp.com/")
+        .baseUrl(baseUrl)
         .client(createOkHttpClient())
         .addConverterFactory(GsonConverterFactory.create(createGson()))
         .addCallAdapterFactory(CoroutineCallAdapterFactory())
         .build()
 }
+
+
