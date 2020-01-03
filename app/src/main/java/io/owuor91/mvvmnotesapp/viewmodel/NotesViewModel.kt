@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import io.owuor91.mvvmnotesapp.models.Note
 import io.owuor91.mvvmnotesapp.repository.NotesRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class NotesViewModel(private val notesRepository: NotesRepository) : ViewModel() {
@@ -21,10 +22,15 @@ class NotesViewModel(private val notesRepository: NotesRepository) : ViewModel()
             val notesResult = notesRepository.getNotes()
             if (notesResult.isSuccessful) {
                 notesMediatorLiveData.postValue(notesResult.body())
-                notesRepository.saveNotes(notesResult.body() as List<Note>)
             } else {
                 notesErrorMediatorLiveData.postValue(notesResult.errorBody().toString())
             }
+        }
+    }
+
+    fun saveNotes(notesList: List<Note>) {
+        viewModelScope.launch(Dispatchers.IO) {
+            notesRepository.saveNotes(notesList)
         }
     }
 }

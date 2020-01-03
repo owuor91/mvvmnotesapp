@@ -1,4 +1,4 @@
-package io.owuor91.news
+package io.owuor91.basetest
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.TestCoroutineDispatcher
@@ -9,7 +9,6 @@ import org.junit.runner.Description
 import org.junit.runners.model.Statement
 
 class CoroutinesRule : TestRule {
-
     override fun apply(base: Statement?, description: Description?): Statement {
         return object : Statement() {
             override fun evaluate() {

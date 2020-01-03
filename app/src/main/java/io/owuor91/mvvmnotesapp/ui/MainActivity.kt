@@ -33,6 +33,7 @@ class MainActivity : BaseActivity() {
     fun observeNotesLiveData() {
         notesViewModel.getNotesResponse().observe(this, Observer { notesList ->
             showNotes(notesList)
+            notesViewModel.saveNotes(notesList)
         })
 
         notesViewModel.getNotesError().observe(this, Observer { error ->
@@ -68,6 +69,7 @@ class MainActivity : BaseActivity() {
     }
 
     fun fetchNewsFeature(view: View) {
+        view.id
         SplitCompat.install(this)
 
         val request: SplitInstallRequest =
@@ -98,7 +100,7 @@ class MainActivity : BaseActivity() {
     }
 
     protected val listener = SplitInstallStateUpdatedListener { state ->
-        state.moduleNames().forEach { name ->
+        state.moduleNames().forEach { _ ->
             when (state.status()) {
                 SplitInstallSessionStatus.DOWNLOADING -> {
                     displayLoadingState("Downloading Post note module", state)
@@ -106,7 +108,6 @@ class MainActivity : BaseActivity() {
                 }
 
                 SplitInstallSessionStatus.REQUIRES_USER_CONFIRMATION -> {
-                    startIntentSender(state.resolutionIntent()?.intentSender, null, 0, 0, 0)
                     Log.i("DFD", "Requires user confirmation")
                 }
 

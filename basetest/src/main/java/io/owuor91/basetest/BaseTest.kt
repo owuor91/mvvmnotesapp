@@ -1,4 +1,4 @@
-package io.owuor91.mvvmnotesapp
+package io.owuor91.basetest
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import io.mockk.MockKAnnotations
@@ -16,5 +16,4 @@ open class BaseTest {
     fun setup() {
         MockKAnnotations.init(this)
     }
-
 }
