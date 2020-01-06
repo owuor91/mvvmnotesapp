@@ -2,7 +2,7 @@ package io.owuor91.news
 
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
-import io.owuor91.basetest.BaseTest
+import io.owuor91.basetest.tests.BaseTest
 import io.owuor91.mvvmnotesapp.models.Article
 import io.owuor91.mvvmnotesapp.models.NewsApiResponse
 import io.owuor91.news.repository.NewsRepository

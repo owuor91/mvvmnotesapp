@@ -1,4 +1,4 @@
-package io.owuor91.basetest
+package io.owuor91.basetest.tests
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.test.TestCoroutineDispatcher

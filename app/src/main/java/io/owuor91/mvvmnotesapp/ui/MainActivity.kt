@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.play.core.splitcompat.SplitCompat
 import com.google.android.play.core.splitinstall.*
 import com.google.android.play.core.splitinstall.model.SplitInstallSessionStatus
@@ -48,6 +49,9 @@ class MainActivity : BaseActivity() {
 
     private fun showNotes(notesList: List<Note>?) {
         Toast.makeText(baseContext, notesList?.size.toString(), Toast.LENGTH_LONG).show()
+        val adapter = NotesRvAdapter(notesList as List<Note>)
+        rvNotes.layoutManager = LinearLayoutManager(this)
+        rvNotes.adapter = adapter
     }
 
     fun fetchPostNotesFeature() {

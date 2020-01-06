@@ -1,4 +1,4 @@
-package io.owuor91.basetest
+package io.owuor91.basetest.tests
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import io.mockk.MockKAnnotations

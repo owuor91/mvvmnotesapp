@@ -89,6 +89,6 @@ dependencies {
     api 'com.google.firebase:firebase-analytics:17.2.1'
     api 'com.crashlytics.sdk.android:crashlytics:2.10.1'
 
-    api project(':basetest')
+    api project(':base_library')
 }
 apply plugin: 'com.google.gms.google-services'

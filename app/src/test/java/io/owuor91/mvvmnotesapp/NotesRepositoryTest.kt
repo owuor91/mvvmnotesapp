@@ -2,7 +2,7 @@ package io.owuor91.mvvmnotesapp
 
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
-import io.owuor91.basetest.BaseTest
+import io.owuor91.basetest.tests.BaseTest
 import io.owuor91.mvvmnotesapp.models.Note
 import io.owuor91.mvvmnotesapp.repository.NotesRepository
 import junit.framework.Assert.assertEquals
