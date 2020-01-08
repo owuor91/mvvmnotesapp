@@ -1,6 +1,7 @@
 package io.owuor91.post_notes.ui
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.Observer
@@ -30,6 +31,13 @@ class AddNoteActivity : BaseActivity() {
 
 
     fun clickPost(view: View) {
+        val title = etTitle.text.toString()
+        val noteText = etNote.text.toString()
+
+        if (TextUtils.isEmpty(title) || TextUtils.isEmpty(noteText)) {
+            toastMessage(getString(R.string.empty_validation))
+            return
+        }
         postNotesViewModel.postNotes(etTitle.text.toString(), etNote.text.toString())
     }
 
