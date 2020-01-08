@@ -1,2 +1,2 @@
-include ':app', ':post_notes', ':news', ':base_library'
+include ':app', ':post_notes', ':news', ':base_library', ':authentication'
 rootProject.name='MVVMNotesApp'

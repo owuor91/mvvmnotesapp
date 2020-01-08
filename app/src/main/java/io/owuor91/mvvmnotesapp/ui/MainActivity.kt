@@ -159,4 +159,20 @@ class MainActivity : BaseActivity() {
         progressBar.max = state.totalBytesToDownload().toInt()
         progressBar.progress = state.bytesDownloaded().toInt()
     }
+
+    fun openAuthentication(view: View) {
+        if (splitInstallManager.installedModules.contains("authentication")) {
+            startActivity(
+                Intent(
+                    this,
+                    Class.forName("io.owuor91.authentication.ui.RegisterActivity")
+                )
+            )
+        } else {
+            val request = SplitInstallRequest.newBuilder().addModule("authentication").build()
+            splitInstallManager.startInstall(request)
+                .addOnSuccessListener { "Started installing auth module" }
+                .addOnFailureListener { "Failed to install auth module" }
+        }
+    }
 }
