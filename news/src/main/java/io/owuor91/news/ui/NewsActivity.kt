@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import io.owuor91.news.R
 import io.owuor91.news.di.newsModule
 import io.owuor91.news.viewmodel.NewsViewModel
+import kotlinx.android.synthetic.main.activity_news.*
 import org.koin.android.ext.android.inject
 import org.koin.core.context.loadKoinModules
 
@@ -33,7 +35,9 @@ class NewsActivity : AppCompatActivity() {
 
     fun observeNewsLiveData() {
         newsViewModel.getNewsResponse().observe(this, Observer { articles ->
-            Toast.makeText(baseContext, articles[0].content, Toast.LENGTH_LONG).show()
+            var articlesAdapter = ArticlesAdapter(articles)
+            rvArticles.layoutManager = LinearLayoutManager(this)
+            rvArticles.adapter = articlesAdapter
         })
 
         newsViewModel.getNewsError().observe(this, Observer { error ->
