@@ -12,5 +12,7 @@ interface AuthApi {
     @POST("api/v2/register")
     fun registerUser(@Field("email") email: String, @Field("password") password: String): Deferred<Response<AuthResponse>>
 
-
+    @FormUrlEncoded
+    @POST("api/v2/login")
+    fun loginUser(@Field("email") email: String, @Field("password") password: String): Deferred<Response<AuthResponse>>
 }

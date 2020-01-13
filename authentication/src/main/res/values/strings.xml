@@ -2,4 +2,5 @@
 <resources>
     <string name="auth_validation">Please provide email and password</string>
     <string name="reg_success">Registration Successful</string>
+    <string name="login_success">Login Successful</string>
 </resources>

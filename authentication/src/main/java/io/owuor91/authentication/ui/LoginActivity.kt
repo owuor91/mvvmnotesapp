@@ -6,30 +6,21 @@ import android.text.TextUtils
 import android.view.View
 import androidx.lifecycle.Observer
 import io.owuor91.authentication.R
-import io.owuor91.authentication.di.authmodule
 import io.owuor91.authentication.viewmodel.AuthViewModel
 import io.owuor91.mvvmnotesapp.ui.BaseActivity
-import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.android.synthetic.main.activity_login.*
 import org.koin.android.ext.android.inject
-import org.koin.core.context.loadKoinModules
 
-private val loadAuthModule by lazy {
-    loadKoinModules(authmodule)
-}
-
-private fun injectAuthModule() = loadAuthModule
-
-class RegisterActivity : BaseActivity() {
+class LoginActivity : BaseActivity() {
     private val authViewModel: AuthViewModel by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register)
-        injectAuthModule()
-        observeRegistrationLiveData()
+        setContentView(R.layout.activity_login)
+        observeLoginLiveData()
     }
 
-    fun clickRegister(view: View) {
+    fun clickLogin(view: View) {
         val email = etEmail.text.toString()
         val password = etPassword.text.toString()
 
@@ -37,13 +28,12 @@ class RegisterActivity : BaseActivity() {
             toastMessage(getString(R.string.auth_validation))
             return
         }
-
-        authViewModel.registerUser(email, password)
+        authViewModel.loginUser(email, password)
     }
 
-    fun observeRegistrationLiveData() {
+    fun observeLoginLiveData() {
         authViewModel.getAuthResponse().observe(this, Observer { authResponse ->
-            toastMessage(getString(R.string.reg_success))
+            toastMessage(getString(R.string.login_success))
             authViewModel.saveUserDetails(authResponse.authToken, authResponse.userId)
             startActivity(Intent(baseContext, DashboardActivity::class.java))
         })
@@ -53,7 +43,7 @@ class RegisterActivity : BaseActivity() {
         })
     }
 
-    fun clickLogin(view: View) {
-        startActivity(Intent(baseContext, LoginActivity::class.java))
+    fun clickRegister(view: View) {
+        startActivity(Intent(baseContext, RegisterActivity::class.java))
     }
 }

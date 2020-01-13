@@ -6,10 +6,16 @@ import retrofit2.Response
 
 interface AuthRepository {
     suspend fun registerUser(email: String, password: String): Response<AuthResponse>
+
+    suspend fun loginUser(email: String, password: String): Response<AuthResponse>
 }
 
 class AuthRepositoryImpl(private val authApi: AuthApi) : AuthRepository {
     override suspend fun registerUser(email: String, password: String): Response<AuthResponse> {
         return authApi.registerUser(email, password).await()
+    }
+
+    override suspend fun loginUser(email: String, password: String): Response<AuthResponse> {
+        return authApi.loginUser(email, password).await()
     }
 }

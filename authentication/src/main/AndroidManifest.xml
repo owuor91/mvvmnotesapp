@@ -14,7 +14,8 @@
     </dist:module>
 
     <application>
-        <activity android:name=".ui.DashboardActivity"></activity>
+        <activity android:name=".ui.LoginActivity"></activity>
+        <activity android:name=".ui.DashboardActivity" />
         <activity android:name=".ui.RegisterActivity" />
     </application>
 

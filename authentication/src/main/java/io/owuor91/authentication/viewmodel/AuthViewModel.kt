@@ -8,9 +8,9 @@ import io.owuor91.authentication.repository.AuthRepository
 import io.owuor91.mvvmnotesapp.models.AuthResponse
 import kotlinx.coroutines.launch
 
-class RegisterViewModel(
-    private val authRepository: AuthRepository, private val sharedPrefsEditor:
-    SharedPreferences.Editor
+class AuthViewModel(
+    private val authRepository: AuthRepository,
+    private val sharedPrefsEditor: SharedPreferences.Editor
 ) : ViewModel() {
     private val authMediatorLiveData = MediatorLiveData<AuthResponse>()
     private val authErrorMediatorLiveData = MediatorLiveData<String>()
@@ -33,5 +33,16 @@ class RegisterViewModel(
     fun saveUserDetails(authToken: String, userId: Int) {
         sharedPrefsEditor.putString("AUTH_TOKEN", authToken).apply()
         sharedPrefsEditor.putInt("USER_ID", userId).apply()
+    }
+
+    fun loginUser(email: String, password: String) {
+        viewModelScope.launch {
+            val authResponse = authRepository.loginUser(email, password)
+            if (authResponse.isSuccessful) {
+                authMediatorLiveData.postValue(authResponse.body())
+            } else {
+                authErrorMediatorLiveData.postValue(authResponse.errorBody().toString())
+            }
+        }
     }
 }

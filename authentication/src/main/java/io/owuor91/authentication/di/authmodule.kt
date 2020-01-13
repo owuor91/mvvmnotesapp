@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import io.owuor91.authentication.api.AuthApi
 import io.owuor91.authentication.repository.AuthRepository
 import io.owuor91.authentication.repository.AuthRepositoryImpl
-import io.owuor91.authentication.viewmodel.RegisterViewModel
+import io.owuor91.authentication.viewmodel.AuthViewModel
 import io.owuor91.mvvmnotesapp.api.createRetrofit
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -13,7 +13,7 @@ import org.koin.dsl.module
 import retrofit2.Retrofit
 
 val authmodule = module {
-    viewModel { RegisterViewModel(authRepository = get(), sharedPrefsEditor = get()) }
+    viewModel { AuthViewModel(authRepository = get(), sharedPrefsEditor = get()) }
 
     single<AuthRepository> { AuthRepositoryImpl(authApi = get()) }
 
